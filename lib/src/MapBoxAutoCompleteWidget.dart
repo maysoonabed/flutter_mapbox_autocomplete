@@ -113,7 +113,7 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
           MapBoxPlace _singlePlace = _placePredictions.features[i];
           return ListTile(
             title: Text(_singlePlace.text),
-            subtitle: Text(_singlePlace.id),
+            subtitle: Text(_singlePlace.placeName),
             onTap: () => _selectPlace(_singlePlace),
           );
         },
