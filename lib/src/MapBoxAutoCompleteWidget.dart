@@ -89,11 +89,10 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.of(context).size.height
-                    //set minimum height equal to 100% of VH
-                    ),
-            width: MediaQuery.of(context).size.width,
+            constraints: BoxConstraints(maxHeight: 600, minHeight: 300
+                //set minimum height equal to 100% of VH
+                ),
+            width: 300,
             padding: EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
