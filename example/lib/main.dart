@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      hintText: "Select starting point",
+      hintText: "اختر وجهتك",
       textController: _startPointController,
       onTap: () {
         Navigator.push(
