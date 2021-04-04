@@ -87,10 +87,9 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF1ABC9C),
-        title: CustomTextField(
+    return Column(
+      children: [
+        CustomTextField(
           hintText: widget.hint,
           textController: _searchFieldTextController,
           onChanged: (input) => _getPlaces(input),
@@ -98,26 +97,19 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
           onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
           // onChanged: (input) => print(input),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () => _searchFieldTextController.clear(),
-          )
-        ],
-      ),
-      body: ListView.separated(
-        separatorBuilder: (cx, _) => Divider(),
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        itemCount: _placePredictions.features.length,
-        itemBuilder: (ctx, i) {
-          MapBoxPlace _singlePlace = _placePredictions.features[i];
-          return ListTile(
-            title: Text(_singlePlace.text),
-            subtitle: Text(_singlePlace.placeName),
-            onTap: () => _selectPlace(_singlePlace),
-          );
-        },
-      ),
+        ListView.separated(
+            separatorBuilder: (cx, _) => Divider(),
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            itemCount: _placePredictions.features.length,
+            itemBuilder: (ctx, i) {
+              MapBoxPlace _singlePlace = _placePredictions.features[i];
+              return ListTile(
+                title: Text(_singlePlace.text),
+                subtitle: Text(_singlePlace.placeName),
+                onTap: () => _selectPlace(_singlePlace),
+              );
+            })
+      ],
     );
   }
 }
