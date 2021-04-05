@@ -78,35 +78,37 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          CustomTextField(
-            hintText: widget.hint,
-            textController: _searchFieldTextController,
-            onChanged: (input) => _getPlaces(input),
-            focusNode: _searchFieldTextFocus,
-            onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
-            // onChanged: (input) => print(input),
-          ),
-          (_placePredictions.features.length>0)?
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.separated(
-              separatorBuilder: (cx, _) => Divider(),
-              padding: EdgeInsets.all(0),
-              itemCount: _placePredictions.features.length,
-              itemBuilder: (ctx, i) {
-                MapBoxPlace _singlePlace = _placePredictions.features[i];
-                return ListTile(
-                  title: Text(_singlePlace.text),
-                  subtitle: Text(_singlePlace.placeName),
-                  onTap: () => _selectPlace(_singlePlace),
-                );
-              },
+    return Material(
+          child: Container(
+        child: Column(
+          children: [
+            CustomTextField(
+              hintText: widget.hint,
+              textController: _searchFieldTextController,
+              onChanged: (input) => _getPlaces(input),
+              focusNode: _searchFieldTextFocus,
+              onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
+              // onChanged: (input) => print(input),
             ),
-          ):Container(),
-        ],
+            (_placePredictions.features.length>0)?
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                separatorBuilder: (cx, _) => Divider(),
+                padding: EdgeInsets.all(0),
+                itemCount: _placePredictions.features.length,
+                itemBuilder: (ctx, i) {
+                  MapBoxPlace _singlePlace = _placePredictions.features[i];
+                  return ListTile(
+                    title: Text(_singlePlace.text),
+                    subtitle: Text(_singlePlace.placeName),
+                    onTap: () => _selectPlace(_singlePlace),
+                  );
+                },
+              ),
+            ):Container(),
+          ],
+        ),
       ),
     );
   }
