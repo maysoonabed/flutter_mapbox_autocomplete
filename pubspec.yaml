@@ -17,3 +17,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Lemonada
+      fonts:  
+        - asset: lib/src/Lemonada-VariableFont_wght.ttf 
