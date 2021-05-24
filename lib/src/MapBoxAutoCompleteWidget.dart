@@ -57,10 +57,18 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
   Future<void> _getPlaces(String input) async {
     if (input.length > 0) {
       String url =
-          "https://api.mapbox.com/geocoding/v5/mapbox.places/$input.json?access_token=${widget.apiKey}&cachebuster=1566806258853&autocomplete=true&language=${widget.language}&limit=${widget.limit}&country=ps";
-
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/$input.json?access_token=${widget.apiKey}&cachebuster=1566806258853&autocomplete=true&language=${widget.language}&limit=${widget.limit}";
+      if (widget.location != null) {
+        url += "&proximity=${widget.location.lng}%2C${widget.location.lat}";
+      }
+      if (widget.country != null) {
+        url += "&country=${widget.country}";
+      }
       final response = await http.get(url);
+      // print(response.body);
+      // // final json = jsonDecode(response.body);
       final predictions = Predections.fromRawJson(response.body);
+
       _placePredictions = null;
 
       setState(() {
@@ -72,43 +80,42 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
   }
 
   void _selectPlace(MapBoxPlace prediction) async {
+    // Calls the `onSelected` callback
     widget.onSelect(prediction);
     if (widget.closeOnSelect) Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-          child: Container(
-        child: Column(
-          children: [
-            CustomTextField(
-              hintText: widget.hint,
-              textController: _searchFieldTextController,
-              onChanged: (input) => _getPlaces(input),
-              focusNode: _searchFieldTextFocus,
-              onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
-              // onChanged: (input) => print(input),
-            ),
-            (_placePredictions.features.length>0)?
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
-                separatorBuilder: (cx, _) => Divider(),
-                padding: EdgeInsets.all(0),
-                itemCount: _placePredictions.features.length,
-                itemBuilder: (ctx, i) {
-                  MapBoxPlace _singlePlace = _placePredictions.features[i];
-                  return ListTile(
-                    title: Text(_singlePlace.text),
-                    subtitle: Text(_singlePlace.placeName),
-                    onTap: () => _selectPlace(_singlePlace),
-                  );
-                },
-              ),
-            ):Container(),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: CustomTextField(
+          hintText: widget.hint,
+          textController: _searchFieldTextController,
+          onChanged: (input) => _getPlaces(input),
+          focusNode: _searchFieldTextFocus,
+          onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
+          // onChanged: (input) => print(input),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () => _searchFieldTextController.clear(),
+          )
+        ],
+      ),
+      body: ListView.separated(
+        separatorBuilder: (cx, _) => Divider(),
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        itemCount: _placePredictions.features.length,
+        itemBuilder: (ctx, i) {
+          MapBoxPlace _singlePlace = _placePredictions.features[i];
+          return ListTile(
+            title: Text(_singlePlace.text),
+            subtitle: Text(_singlePlace.placeName),
+            onTap: () => _selectPlace(_singlePlace),
+          );
+        },
       ),
     );
   }
