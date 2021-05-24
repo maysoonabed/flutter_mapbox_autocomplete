@@ -65,7 +65,7 @@ class CustomTextField extends StatelessWidget {
         fillColor: Color(0xFF1ABC9C),
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         errorStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).backgroundColor,
           fontSize: 14,
         ),
       ),
