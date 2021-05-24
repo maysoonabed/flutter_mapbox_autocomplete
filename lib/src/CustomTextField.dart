@@ -58,10 +58,11 @@ class CustomTextField extends StatelessWidget {
         ),
         filled: true,
         hintStyle: TextStyle(
-          color: Colors.grey[800],
+          color: Colors.white,
+          fontFamily: 'Lemonada', //grey[800]
         ),
         hintText: hintText,
-        fillColor: Colors.white30,
+        fillColor: Color(0xFF1ABC9C),
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         errorStyle: TextStyle(
           color: Theme.of(context).primaryColor,
