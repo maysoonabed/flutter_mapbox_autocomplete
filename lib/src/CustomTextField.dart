@@ -44,6 +44,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: TextAlign.end,
       initialValue: initialValue,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
