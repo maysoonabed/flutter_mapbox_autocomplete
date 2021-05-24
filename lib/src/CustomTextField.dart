@@ -47,6 +47,8 @@ class CustomTextField extends StatelessWidget {
       textAlign: TextAlign.end,
       initialValue: initialValue,
       decoration: InputDecoration(
+        focusColor: Color(0xFF00796B),
+        hoverColor: Color(0xFF00796B),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
